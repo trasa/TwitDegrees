@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="TwitDegrees.GraphViewer.Modules.Graph.GraphView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  
+	xmlns:Command="clr-namespace:Microsoft.Practices.Composite.Presentation.Commands;assembly=Microsoft.Practices.Composite.Presentation"  
+    >
+	
+	<Grid x:Name="mainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
+
+		<Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="200" />
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStopCollection>
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="LawnGreen" Offset=".6" />
+                    <GradientStop Color="LawnGreen" Offset=".7" />
+                    <GradientStop Color="Black" Offset="1" />
+                </GradientStopCollection>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+
+		<Canvas Grid.Row="0" Margin="10" x:Name="mainCanvas" MouseLeftButtonDown="mainCanvas_MouseLeftButtonDown">
+            <Canvas.Background>
+                <SolidColorBrush Color="White" Opacity=".3"/>
+            </Canvas.Background>
+
+            <Canvas.Resources>
+                <Storyboard x:Name="leftAnimationStoryboard">
+                    <DoubleAnimation x:Name="leftAnimation" 
+              Storyboard.TargetName="entityCanvas"
+              Storyboard.TargetProperty="(Canvas.Left)"
+              To="100" Duration="0:0:0.200" />
+                </Storyboard>
+
+                <Storyboard x:Name="topAnimationStoryboard">
+                    <DoubleAnimation x:Name="topAnimation"
+              Storyboard.TargetName="entityCanvas"
+              Storyboard.TargetProperty="(Canvas.Top)"
+              To="100" Duration="0:0:0.200" />
+                </Storyboard>
+
+                <Storyboard x:Name="fadeOutStoryboard" Completed="fadeOutStoryboard_Completed"> 
+                    <DoubleAnimation x:Name="fadeOutAnimation" 
+              Storyboard.TargetName="entityCanvas"
+              Storyboard.TargetProperty="Opacity"
+              To="0" Duration="0:0:0.300" />
+                </Storyboard>
+
+                <Storyboard x:Name="fadeInStoryboard">
+                    <DoubleAnimation x:Name="fadeInAnimation" 
+              Storyboard.TargetName="entityCanvas"
+              Storyboard.TargetProperty="Opacity"
+              To="1" Duration="0:0:0.700" />
+                </Storyboard>
+            </Canvas.Resources>
+
+            <Canvas x:Name="entityCanvas" Margin="30" HorizontalAlignment="Center">
+				<!-- user controls [buttons] will go here. -->
+            </Canvas>
+        </Canvas>
+
+        <StackPanel Grid.Row="1">
+            <Grid Margin="5">
+                <Grid.Background>
+                    <SolidColorBrush Color="White" Opacity=".6"/>
+                </Grid.Background>
+
+                <StackPanel Grid.Column="0">
+                    <Slider x:Name="zoomSlider" Value="30" Minimum="1" Maximum="100" Margin="5" ValueChanged="zoomSlider_ValueChanged" />
+
+					<StackPanel Orientation="Horizontal" Margin="5">
+						<TextBlock VerticalAlignment="Center">User:</TextBlock>
+						<TextBox x:Name="selectedUserName" Width="50" Text="{Binding Mode=TwoWay, Path=SelectedUserName}" />
+					</StackPanel>
+					
+					<StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock VerticalAlignment="Center">Max Path Length:</TextBlock>
+                        <TextBox x:Name="depthTextBox" Width="30" Text="{Binding Mode=TwoWay, Path=MaxTreeDepth}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="5">                       
+                        <TextBlock VerticalAlignment="Center">Spacing:</TextBlock>
+                        <Slider x:Name="spacingSlider" Minimum="1" Maximum="100" Width="100" Value="{Binding Mode=TwoWay, Path=Spacing}"/>
+                    </StackPanel>
+                    
+                    <Button Margin="5" Content="Generate" HorizontalAlignment="Left" Command:Click.Command="{Binding Path=ResetCommand}" />
+                </StackPanel>
+            </Grid>
+            <TextBlock TextAlignment="Center" Foreground="White" Margin="5"  x:Name="infoBlock" Text="{Binding InfoText}" ></TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

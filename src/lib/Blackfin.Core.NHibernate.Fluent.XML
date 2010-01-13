@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Blackfin.Core.NHibernate.Fluent</name>
+    </assembly>
+    <members>
+        <member name="T:Blackfin.Core.NHibernate.Fluent.INHibernateConfigurationService">
+            <summary>
+            Configure NHibernate (via FluentNHibernate) to get a SessionFactory.
+            </summary>
+        </member>
+        <member name="M:Blackfin.Core.NHibernate.Fluent.INHibernateConfigurationService.Configure">
+            <summary>
+            Exposes the FluentNHibernate "Fluently.Configure()" object for implementations to decorate.
+            </summary>
+            <returns>Configuration</returns>
+        </member>
+        <member name="M:Blackfin.Core.NHibernate.Fluent.INHibernateConfigurationService.CreateSessionFactory">
+            <summary>
+            Configures NHibernate and creates the session factory.
+            </summary>
+            <returns>ISessionFactory</returns>
+        </member>
+        <member name="M:Blackfin.Core.NHibernate.Fluent.INHibernateConfigurationService.CreateSchema(System.Boolean,System.Data.IDbConnection)">
+            <summary>
+            Creates the schema.  Note: this tends to drop your old tables and such, be careful.
+            </summary>
+            <param name="outputToConsole">if set to <c>true</c> output DDL to console.</param>
+            <param name="connection">The connection to create on.</param>
+        </member>
+        <member name="P:Blackfin.Core.NHibernate.Fluent.INHibernateConfigurationService.Configuration">
+            <summary>
+            Exposes the post-Configure() Configuration.
+            </summary>
+            <value>The configuration.</value>
+        </member>
+        <member name="M:Blackfin.Core.NHibernate.Fluent.NHibernateConfigurationService.BuildMsSqlConfigurer">
+            <summary>
+            Builds the MS-SQL configuration.
+            </summary>
+            <remarks>you may override this to provide your own configuration.</remarks>
+            <returns>PersistenceConfigurer</returns>
+        </member>
+        <member name="M:Blackfin.Core.NHibernate.Fluent.NHibernateConfigurationService.BuildInMemoryConfigurer">
+            <summary>
+            Builds the in memory configuration.
+            </summary>
+            <remarks>you may override this to provide your own configuration.</remarks>
+            <returns>PersistenceConfigurer</returns>
+        </member>
+        <member name="P:Blackfin.Core.NHibernate.Fluent.NHibernateConfigurationService.PersistenceConfigurer">
+            <summary>
+            The PersistenceConfigurer to give to Fluent NHibernate
+            </summary>
+            <remarks>
+            This method is virtual, but consider overriding the Build* methods to achieve 
+            what you need rather than overriding here, if possible.
+            </remarks>
+            <value>The configured PersistenceConfigurer</value>
+        </member>
+    </members>
+</doc>

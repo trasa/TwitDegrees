@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitDegrees.GraphViewer.Modules.Graph", "TwitDegrees.GraphViewer.Modules.Graph\TwitDegrees.GraphViewer.Modules.Graph.csproj", "{121C6A06-D16E-46D1-B80A-5B4E762F9028}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitDegrees.GraphViewer.Infrastructure", "TwitDegrees.GraphViewer.Infrastructure\TwitDegrees.GraphViewer.Infrastructure.csproj", "{98A350DA-0CC7-4872-8611-E643B6255EF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitDegrees.GraphViewer", "TwitDegrees.GraphViewer\TwitDegrees.GraphViewer.csproj", "{938CEDFF-8F10-4268-8044-16E42888A881}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitDegrees.Web", "TwitDegrees.Web\TwitDegrees.Web.csproj", "{4BD0F89F-517A-49BD-9972-B15DD527AEDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitDegrees.Presentation.Core", "TwitDegrees.Presentation.Core\TwitDegrees.Presentation.Core.csproj", "{C0E4324C-B81F-4301-8014-542E8F3E8CAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphViewer", "GraphViewer", "{40BBA5CD-5A16-41CE-892E-30B4C288FAEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitDegrees.Presentation.Test", "TwitDegrees.Presentation.Test\TwitDegrees.Presentation.Test.csproj", "{60CC823E-5665-4281-ABC5-F5503A45CCC7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{121C6A06-D16E-46D1-B80A-5B4E762F9028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{121C6A06-D16E-46D1-B80A-5B4E762F9028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{121C6A06-D16E-46D1-B80A-5B4E762F9028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{121C6A06-D16E-46D1-B80A-5B4E762F9028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98A350DA-0CC7-4872-8611-E643B6255EF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98A350DA-0CC7-4872-8611-E643B6255EF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98A350DA-0CC7-4872-8611-E643B6255EF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98A350DA-0CC7-4872-8611-E643B6255EF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{938CEDFF-8F10-4268-8044-16E42888A881}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{938CEDFF-8F10-4268-8044-16E42888A881}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{938CEDFF-8F10-4268-8044-16E42888A881}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{938CEDFF-8F10-4268-8044-16E42888A881}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BD0F89F-517A-49BD-9972-B15DD527AEDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BD0F89F-517A-49BD-9972-B15DD527AEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BD0F89F-517A-49BD-9972-B15DD527AEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BD0F89F-517A-49BD-9972-B15DD527AEDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0E4324C-B81F-4301-8014-542E8F3E8CAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E4324C-B81F-4301-8014-542E8F3E8CAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E4324C-B81F-4301-8014-542E8F3E8CAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E4324C-B81F-4301-8014-542E8F3E8CAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60CC823E-5665-4281-ABC5-F5503A45CCC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60CC823E-5665-4281-ABC5-F5503A45CCC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60CC823E-5665-4281-ABC5-F5503A45CCC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60CC823E-5665-4281-ABC5-F5503A45CCC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{938CEDFF-8F10-4268-8044-16E42888A881} = {40BBA5CD-5A16-41CE-892E-30B4C288FAEF}
+		{98A350DA-0CC7-4872-8611-E643B6255EF0} = {40BBA5CD-5A16-41CE-892E-30B4C288FAEF}
+		{121C6A06-D16E-46D1-B80A-5B4E762F9028} = {40BBA5CD-5A16-41CE-892E-30B4C288FAEF}
+	EndGlobalSection
+EndGlobal

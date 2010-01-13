@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Blackfin.Core.Mvc</name>
+    </assembly>
+    <members>
+        <member name="M:Blackfin.Core.Mvc.Extensions.ControllerExtensions.GetActionName(System.Linq.Expressions.LambdaExpression)">
+            <summary>
+            Extract the action name out of this expression.
+            </summary>
+            <param name="actionExpression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blackfin.Core.Mvc.Extensions.TypeExtensions.GetControllerName(System.Type)">
+            <summary>
+            Gets the name of the controller out of the type name, assuming this type is a controller of course....
+            </summary>
+            <param name="controllerType">type to extract name from.</param>
+            <returns>name minus controller</returns>
+        </member>
+    </members>
+</doc>

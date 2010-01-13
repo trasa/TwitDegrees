@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Blackfin.Core.NUnit</name>
+    </assembly>
+    <members>
+        <member name="T:Blackfin.Core.NUnit.AssertArray">
+            <summary>
+            Assert.Array
+            </summary>
+        </member>
+        <member name="M:Blackfin.Core.NUnit.AssertArray.AreEqual``1(``0[],``0[])">
+            <summary>
+            Are the two arrays equal.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="expected">The expected.</param>
+            <param name="actual">The actual.</param>
+        </member>
+        <member name="T:Blackfin.Core.NUnit.AssertException">
+            <summary>
+            Assert that an Exception will occur in this action.
+            </summary>
+        </member>
+        <member name="M:Blackfin.Core.NUnit.AssertException.Expect``1(System.Action)">
+            <summary>
+            Expects to fail.
+            </summary>
+            <typeparam name="TException">The type of the exception.</typeparam>
+            <param name="action">The action.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Blackfin.Core.NUnit.AssertException.Expect``1(System.Action,System.String)">
+            <summary>
+            Expects to fail.
+            </summary>
+            <typeparam name="TException">The type of the exception.</typeparam>
+            <param name="action">The action.</param>
+            <param name="expectedMessage">The expected message.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Blackfin.Core.NUnit.Expect">
+            <summary>
+            Expect something, fail otherwise.
+            </summary>
+        </member>
+        <member name="M:Blackfin.Core.NUnit.Expect.Exception``1(System.Action)">
+            <summary>
+            Expects to fail.
+            </summary>
+            <typeparam name="TException">The type of the exception.</typeparam>
+            <param name="action">The action.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Blackfin.Core.NUnit.Expect.Exception``1(System.Action,System.String)">
+            <summary>
+            Expects to fail.
+            </summary>
+            <typeparam name="TException">The type of the exception.</typeparam>
+            <param name="action">The action.</param>
+            <param name="expectedMessage">The expected message.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Blackfin.Core.NUnit.Impersonator">
+            <summary>
+            Pretend to be somebody else within the context of this thread and this Disposable Impersonator.
+            </summary>
+        </member>
+        <member name="M:Blackfin.Core.NUnit.Impersonator.#ctor(System.Security.Principal.IPrincipal)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Blackfin.Core.NUnit.Impersonator"/> class.
+            </summary>
+            <param name="impersonateThisGuy">The impersonate this guy.</param>
+        </member>
+        <member name="M:Blackfin.Core.NUnit.Impersonator.StopImpersonating">
+            <summary>
+            Stops impersonating thisGuy.
+            </summary>
+        </member>
+        <member name="M:Blackfin.Core.NUnit.Impersonator.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Blackfin.Core.NUnit.Impersonator.Impersonate(System.Security.Principal.IPrincipal)">
+            <summary>
+            Impersonates thisGuy.
+            </summary>
+            <param name="thisGuy">The this guy.</param>
+            <returns>Impersonator for cleaning up later, don't forget!</returns>
+        </member>
+    </members>
+</doc>

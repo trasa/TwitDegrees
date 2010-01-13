@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="TwitDegrees" default="build" xmlns="http://nant.sf.net/release/0.85-rc4/nant.xsd">
+
+
+    <!-- Set global properties. The "unless" clause allows the properties
+         to be overridden from the command line without nant generating
+         a "read-only property value can not be changed" warning.
+
+         To override property foo from the command line:
+         nant -D:foo=newval
+	-->
+
+
+	<!-- root of project --> 
+    <property name="project.root.dir" value=".." 
+        unless="${property::exists('project.root.dir')}"/>
+
+	<!-- where my tools at -->
+	<property name="tools.dir" value="${project.root.dir}\tools" 
+		unless="${property::exists('tools.dir')}" />
+
+	<property name="nunit.dir" value="${tools.dir}\nunit\bin\"
+		unless="${property::exists('nunit.dir')}" />
+
+	<property name="nunit.exe.name" value="nunit-console-x86.exe"
+		unless="${property::exists('nunit.exe.name')}" />
+
+	<property name="nunit.exe" value="${nunit.dir}\${nunit.exe.name}" 
+		unless="${property::exists('nunit.exe')}" />
+
+	<!-- where my libs at -->
+	<property name="lib.dir" value=".\lib"
+		unless="${property::exists('lib.dir')}" />
+
+	<!-- Database files -->
+	<property name="db.dir" value="${project.root.dir}\db"
+		unless="${property::exists('db.dir')}" />
+	
+	<!-- our main solution directory -->
+	<property name="twitdegrees.sln.dir" value=".\TwitDegrees" />
+	
+	<!-- our main solution file -->
+    <property name="twitdegrees.solution.file" value="${twitdegrees.sln.dir}\TwitDegrees.sln" />
+
+	<!-- where the build artifacts go -->
+	<property name="project.build.dir" value=".\Build"
+		unless="${property::exists('project.build.dir')}" />
+
+	<!-- where the build websites ends up, as a pre-deployment / install step. -->
+	<property name="build.web.dir" value="${project.build.dir}\AutomatedRelease\TwitDegrees.Web" />
+
+	<!-- Where to put the compiled release website for deployment -->
+	<property name="deploy.site.dir" value="${build.web.dir}"
+		unless="${property::exists('deploy.site.dir')}"/>
+
+	<!-- where the ccnet artifacts (install files) go -->
+	<property name="CCNetArtifactDirectory" value="${project.build.dir}\Artifacts"
+		unless="${property::exists('CCNetArtifactDirectory')}" />
+
+	<!-- which build is ccnet working on? -->
+	<property name="CCNetLabel" value="0"
+		unless="${property::exists('CCNetLabel')}" />
+
+	<!-- the full name of the version of this build -->
+	<property name="FullVersionString" value="1.0.0.${CCNetLabel}"
+		unless="${property::exists('FullVersionString')}" />
+
+	<!-- file that tells the assembly what version to update everything to -->
+	<property name="version.file" value="${twitdegrees.sln.dir}\VersionInfo.cs"
+		unless="${property::exists('version.file')}" />
+	
+	<!-- where test reports are written -->
+	<property name="testreports.dir" value="${project.build.dir}\AutomatedTest\test-reports" />
+
+	<!-- where the Program Files are (for x64ness) -->
+	<property name="programfiles.dir" value="Program Files" unless="${property::exists('programfiles.dir')}" />
+
+	<!-- where the production files are deployed to -->
+	<property name="prod.server" value="sqldev" unless="${property::exists('prod.server')}" />
+	<property name="prod.server.dir" value="TwitDegrees" unless="${property::exists('prod.server.dir')}" />
+	<property name="production.dir" value="\\${prod.server}\${prod.server.dir}" />
+
+	
+
+	<!--
+	   Public / User Targets 
+	-->
+	<target name="build" description="Builds the whole suite, for local development and testing."
+			depends="clean, updateVersionInfo, test" />
+
+	<!-- todo: this doesn't build anything yet.. -->
+	<target name="deployProd" description="deploy to production."
+		depends="copyToProduction" 	
+	/>
+	<!--
+	<target name="buildCruiseControl" description="ccnet-specific configuration to build the entire suite"  
+			depends="build, makeRelease, deployBuild, makeInstall, deployCruiseControl" />
+	-->
+
+	<target name="clean" description="Clean up the build directory">
+		<delete dir="${project.build.dir}" />
+	</target>
+
+
+	<!-- 
+	   Internal Targets 
+		(Don't call these directly, use Public Targets instead!)
+	-->
+
+	<target name="copyToProduction">
+		<copy todir="${production.dir}">
+			<fileset basedir="${twitdegrees.sln.dir}\TwitDegrees.Controller\bin\debug">
+				<include name="*"/>
+				<exclude name="*.log" />
+				<exclude name="*.txt" />
+			</fileset>
+		</copy>
+		<copy todir="${production.dir}">
+			<fileset basedir="${twitdegrees.sln.dir}\TwitDegrees.Crawler\bin\debug">
+				<include name="*" />
+				<exclude name="*.log" />
+				<exclude name="*.txt" />
+			</fileset>
+		</copy>
+		<copy todir="${production.dir}">
+			<fileset basedir="${twitdegrees.sln.dir}\TwitDegrees.PurgeQueue\bin\debug">
+				<include name="*" />
+			</fileset>
+		</copy>
+	</target>
+
+
+
+	<target name="updateVersionInfo" description="Writes the new version info into the assemblies.">
+		<echo message="UPDATING BUILD VERSION TO ${FullVersionString}" />
+		<asminfo output="${version.file}" language="CSharp">
+			<imports>
+				<import namespace="System.Reflection" />
+			</imports>
+			<attributes>
+				<attribute type="AssemblyVersionAttribute" value="${FullVersionString}" />
+				<attribute type="AssemblyFileVersionAttribute" value="${FullVersionString}" />				
+			</attributes>
+		</asminfo>
+	</target>
+
+	
+	<!-- test stuff -->
+	<target name="test" 
+			depends="compileTest, runUnitTests"
+	/>
+
+	<target name="compileTest">
+		<msbuild project="${twitdegrees.solution.file}" target="Rebuild">
+			<property name="Configuration" value="AutomatedTest" />
+		</msbuild>
+	</target>
+
+	<target name="runUnitTests" 
+			depends="createTestReportDir, runBaseTests">
+	</target>
+
+	<target name="createTestReportDir">
+		<mkdir dir="${testreports.dir}" />
+	</target>
+
+	<target name="runBaseTests">
+		<exec program="${nunit.exe}" verbose="true">
+			<arg value="${project.build.dir}\AutomatedTest\TwitDegrees.Test\TwitDegrees.Test.dll" />
+			<arg value="/xml:${testreports.dir}\UnitTests-Base.xml" />
+<!--			<arg value="/exclude=data" />-->
+			<arg value="/nologo" />
+		</exec>		
+	</target>
+
+	<!-- Release Compile Stuff -->
+	<target name="makeRelease">
+		<msbuild project="${twitdegrees.solution.file}" target="Rebuild">
+			<property name="Configuration" value="AutomatedRelease" />
+		</msbuild>
+	</target>
+
+	
+	<!-- Make the installation -->
+	<target name="makeInstall">
+		<mkdir dir="${CCNetArtifactDirectory}" />
+		<zip zipfile="${CCNetArtifactDirectory}\${project::get-name()}_${FullVersionString}.zip"
+			 includeemptydirs="true">
+			<fileset basedir="${project.build.dir}\AutomatedRelease">
+				<include name="**/*" />
+			</fileset>
+			<fileset basedir="${project.root.dir}">
+				<include name="db\**" />
+				<exclude name="**\_sgbak\**" />
+				<exclude name="**\.svn\**" />
+			</fileset>
+			<fileset basedir="${project.build.dir}">
+				<include name="Redist\**" />
+			</fileset>
+		</zip>
+	</target>
+
+	
+	<target name="deployBuild" description="deploys the website to the local build directory">
+		<copy todir="${build.web.dir}">
+			<fileset basedir="${twitdegrees.sln.dir}\TwitDegrees.Web">
+				<include name="**"/>
+				<exclude name="App_Data\**"/>
+				<exclude name="bin\**"/>
+				<exclude name="obj\**"/>
+				<exclude name="**\_sgbak\**"/>
+				<exclude name="**\.svn\**" />
+				<exclude name="**\*.log"/>
+			</fileset>
+		</copy>
+		
+		<!-- copy over correct config file if needed: -->
+		<if test="${property::exists('copyCCNetConfig')}">
+			<echo message="Copying over ccnet config" />
+			<echo message="WARNING!! web.ccnet.config doesn't exist yet!!" />
+			<!--
+			<copy overwrite="true"
+				  file="${teammark.sln.dir}\TeamMark.Web\web.ccnet.config"
+				  tofile="${build.web.dir}\web.config"
+			/>
+			-->
+		</if>
+
+	</target>
+
+	
+	<!-- 
+	   Copy the website into the ccnet deployment directory.	
+		For ccnet, we're copying everything, code and all - easier that way, and doesn't
+		make a big difference in the long run.
+	 -->
+	<target name="deployCruiseControl">
+		<copy todir="${deploy.site.dir}">
+			<fileset basedir="${build.web.dir}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+</project>

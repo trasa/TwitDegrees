@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="TwitDegrees.Presentation.Core.Models.TwitterUser, TwitDegrees.Presentation.Core" table="TwitterUser">
+		<id name="Name" column="Name" type="String">
+			<generator class="native"/>
+		</id>
+		<property name="FriendCount" column="FriendCount" type="int" />
+		<bag name="Friends" table="UserFriends">
+			<key column="UserName"/>
+			<one-to-many class="TwitDegrees.Presentation.Core.Models.UserFriends, TwitDegrees.Presentation.Core"/>
+		</bag>
+	</class>
+</hibernate-mapping>
