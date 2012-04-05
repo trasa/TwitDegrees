@@ -1,0 +1,16 @@
+TWIT-DEGREES
+
+A distributed Crawler/Controller architecture for crawling Twitter, gathering 
+data on followers and friends, and then providing visualizations of that 
+data for analysis. Written in C# using MSMQ to manage communication between 
+crawlers and controllers. High volume, high bandwidth, gathered 100s of 
+millions of records in a very short amount of time.
+
+This was put together as an experiment to see if it would generate more
+business from a client of an employer of mine.  It didn't, so the project
+was canceled and nothing further came from it.  
+
+If I were to do this again now, I'd do things differently, particularly
+in how the data itself was actually stored -- this outstripped capacity
+very quickly, and this was written a while back when Twitter was still
+(kinda) new.
